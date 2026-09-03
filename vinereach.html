@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VineReach — Caso de estudio · Pablo Orihuela</title>
+<meta name="description" content="Sistema de ventas AI para bodegas de Castilla y León. Caso de estudio completo: problema, decisiones, sistema y aprendizajes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Instrument+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FDFDFB;--ink:#1A1714;--ink-soft:#5C564F;
+  --tinto:#6E1423;--tinto-soft:#F3E8EA;--line:#E4E0DA;--max:760px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--paper);color:var(--ink);font-family:'Instrument Sans',system-ui,sans-serif;font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+a:focus-visible{outline:2px solid var(--tinto);outline-offset:3px;border-radius:2px}
+
+nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:16px 24px}
+.nav-name{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none}
+.nav-demo{font-size:14px;font-weight:600;text-decoration:none;background:var(--tinto);color:#fff;padding:9px 18px;border-radius:3px}
+.nav-demo:hover{background:#571020}
+
+main{max-width:var(--max);margin:0 auto;padding:0 24px 96px}
+header.case-head{padding:80px 0 48px;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--tinto);display:block;margin-bottom:18px}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(38px,6vw,58px);line-height:1.06;letter-spacing:-.01em}
+.tagline{margin-top:22px;font-size:20px;color:var(--ink-soft);font-style:italic;max-width:56ch}
+.meta-row{margin-top:26px;display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-family:'Space Mono',monospace;font-size:12px;background:var(--tinto-soft);color:var(--tinto);padding:5px 12px;border-radius:100px}
+
+.demo-band{margin:48px 0;border:1px solid var(--line);border-radius:6px;padding:34px;background:#fff;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.demo-band p{font-size:15px;color:var(--ink-soft);max-width:40ch}
+.demo-band strong{color:var(--ink)}
+.btn{display:inline-block;padding:12px 24px;border-radius:3px;font-size:15px;font-weight:600;text-decoration:none;background:var(--tinto);color:#fff}
+.btn:hover{background:#571020}
+
+h2{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(26px,3.6vw,34px);margin:64px 0 20px;scroll-margin-top:90px}
+h3{font-family:'Fraunces',serif;font-weight:600;font-size:21px;margin:36px 0 12px}
+p{margin-bottom:18px;color:var(--ink);max-width:66ch}
+p.soft{color:var(--ink-soft)}
+ul{margin:0 0 18px 22px}
+li{margin-bottom:10px;max-width:62ch}
+em.claim{font-style:normal;color:var(--tinto);font-weight:600}
+blockquote{border-left:3px solid var(--tinto);padding:6px 0 6px 22px;margin:26px 0;font-family:'Fraunces',serif;font-size:20px;font-style:italic;color:var(--ink)}
+.module-tag{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.status-live{color:#2E7D46;font-weight:700}
+.proof{display:grid;gap:26px;margin:36px 0 8px}
+@media(min-width:720px){.proof{grid-template-columns:repeat(3,1fr)}}
+.proof figure{margin:0;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#fff}
+.proof img{display:block;width:100%;height:190px;object-fit:cover;object-position:top left;background:var(--tinto-soft)}
+.proof figcaption{padding:16px 18px;font-size:14px;line-height:1.55;color:var(--ink-soft)}
+.proof figcaption b{display:block;color:var(--ink);font-weight:600;margin-bottom:4px;font-size:15px}
+hr{border:none;border-top:1px solid var(--line);margin:56px 0}
+
+.cta-final{margin-top:72px;border:1px solid var(--line);border-radius:6px;padding:44px;text-align:center;background:#fff}
+.cta-final h2{margin:0 0 12px}
+.cta-final p{margin:0 auto 26px;color:var(--ink-soft)}
+footer{border-top:1px solid var(--line);padding:28px 24px;text-align:center;font-family:'Space Mono',monospace;font-size:12px;color:var(--ink-soft)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-name" href="index.html">← Pablo Orihuela</a>
+    <a class="nav-demo" href="https://pablorii.github.io/sales-carousel-generator/" target="_blank" rel="noopener">Probar la demo en vivo</a>
+  </div>
+</nav>
+
+<main>
+<header class="case-head">
+  <span class="eyebrow">Caso de estudio</span>
+  <h1>VineReach</h1>
+  <p class="tagline">Un sistema de IA que ayuda a las bodegas de Castilla y León a llegar a restaurantes y hoteles sin depender de un Excel que nadie actualiza.</p>
+  <div class="meta-row">
+    <span class="chip">Claude API</span><span class="chip">Groq</span><span class="chip">Make</span><span class="chip">Google Maps API</span><span class="chip">Google Sheets</span><span class="chip">Resend</span><span class="chip">HTML/CSS/JS</span>
+  </div>
+</header>
+
+<div class="demo-band">
+  <p><strong>Los tres módulos están en producción.</strong> El sistema se ejecuta solo cada semana. El generador de contenido puedes probarlo ahora mismo.</p>
+  <a class="btn" href="https://pablorii.github.io/sales-carousel-generator/" target="_blank" rel="noopener">Abrir la demo</a>
+</div>
+
+<h2>La prueba, en 30 segundos</h2>
+<p>Tres capturas de lo que está corriendo ahora mismo. No hay maquetas.</p>
+
+<div class="proof">
+  <figure>
+    <img src="img/escenario-make.png" alt="Escenario de prospección en Make: siete módulos encadenados y el historial de ejecuciones semanales">
+    <figcaption><b>El motor</b>Los siete pasos de la prospección, y debajo el historial: un pico por semana, sin fallos.</figcaption>
+  </figure>
+  <figure>
+    <img src="img/sheet-prospects.png" alt="Hoja de cálculo con restaurantes encontrados, resumen ejecutivo y email redactado por la IA">
+    <figcaption><b>El resultado</b>Locales reales encontrados, cada uno con su resumen y su email ya escrito.</figcaption>
+  </figure>
+  <figure>
+    <img src="img/informe-semanal.png" alt="Informe semanal recibido por email con las métricas del pipeline y el resumen ejecutivo">
+    <figcaption><b>El informe</b>Lo que llega al correo cada lunes a las 9:00, sin abrir ninguna herramienta.</figcaption>
+  </figure>
+</div>
+
+<hr>
+
+<h2>El problema</h2>
+<p>Las bodegas de Castilla y León tienen un producto excelente y un sistema de ventas B2B anticuado.</p>
+<p>Un responsable comercial dedica su semana a llamadas que no contestan, restaurantes que «ya tienen proveedor», y un Excel de 400 contactos que nadie actualiza. El seguimiento depende de la memoria. Las oportunidades se pierden entre reuniones.</p>
+<blockquote>No es un problema de producto. Es un problema de proceso.</blockquote>
+<p class="soft">Castilla y León concentra más del 30% de la producción vinícola española: empresas con producto diferenciado, clientes B2B claros —restaurantes, hoteles, distribuidores— y un proceso comercial que no ha cambiado en 20 años.</p>
+
+<h2>Mis decisiones</h2>
+<h3>Por qué bodegas</h3>
+<p>Dolor real y sin resolver, acceso directo desde Valladolid —Ribera del Duero, Rueda, Toro y Cigales a mano— y datos públicos abundantes para construir el sistema sin depender de acceso privilegiado a nada.</p>
+<h3>Por qué empecé por el contenido y no por la prospección</h3>
+<p>La prospección parece el dolor más directo, pero el contenido es el módulo con menor dependencia externa: no necesita datos de terceros, se puede publicar rápido y valida el interés antes de construir la parte más pesada del sistema. <em class="claim">Construir infraestructura completa antes de probar una sola victoria vertical es la forma más común de no terminar un proyecto.</em></p>
+<h3>Por qué el comercial aprueba antes de enviar</h3>
+<p>En un sector relacional como el vino, un email mal dirigido enviado por un sistema quema un contacto para siempre. La IA hace el trabajo previo —encontrar, puntuar, redactar— pero la decisión final de contactar sigue siendo humana.</p>
+<h3>El stack</h3>
+<ul>
+  <li><strong>Claude API</strong> para la generación de contenido y copy.</li>
+  <li><strong>Make</strong> para orquestar el flujo entre datos y modelo: lienzo visual, fácil ver el dato moverse entre pasos.</li>
+  <li><strong>Google Maps API</strong> para datos reales de restaurantes y hoteles por zona.</li>
+  <li><strong>Groq</strong> (Llama 3.3 70B) para el copy de prospección y el resumen ejecutivo del informe: latencia baja y coste marginal, suficiente para texto de trabajo.</li>
+  <li><strong>Google Sheets</strong> como base de datos: suficiente para el volumen actual, y es donde el comercial ya vive.</li>
+  <li><strong>Resend</strong> para la entrega del informe semanal por email.</li>
+  <li><strong>HTML/CSS/JS</strong> para la interfaz de la demo.</li>
+</ul>
+
+<h2>Cómo funciona</h2>
+<p>Tres módulos conectados que cubren el ciclo completo: <strong>atraer → contactar → medir</strong>.</p>
+
+<h3><span class="module-tag">Módulo 1 · </span>Contenido <span class="status-live">· en producción</span></h3>
+<p>Esto es marketing, no solo generación de texto. El comercial no necesita saber de marketing de contenidos para tener una estrategia detrás de cada publicación: el sistema traduce tres inputs —tema, perfil del vendedor y beneficios del producto— en un carrusel de 8 slides para LinkedIn, la red donde vive la decisión de compra B2B.</p>
+<p>Las decisiones de marketing detrás del formato:</p>
+<ul>
+  <li><strong>Carrusel de 8 slides, no un post suelto:</strong> obliga a construir un argumento paso a paso, en vez de una sola idea que el feed se traga en dos segundos.</li>
+  <li><strong>El perfil del vendedor cambia el tono:</strong> un SDR necesita apertura y curiosidad; un VP Sales, autoridad y visión. El sistema ajusta el ángulo según quién publica, no solo qué vino se vende.</li>
+  <li><strong>El público objetivo es un input obligatorio:</strong> el mismo vino se vende distinto a un restaurante de menú diario que a un hotel de cinco estrellas. El sistema fuerza a definirlo antes de generar nada.</li>
+</ul>
+<p>Resultado: de tema y beneficios a carrusel completo —copy, descripción visual y caption— en 5 minutos, listo para publicar.</p>
+
+<h3><span class="module-tag">Módulo 2 · </span>Prospección <span class="status-live">· en producción</span></h3>
+<p>Cada lunes a las 8:00 el sistema se ejecuta solo. Busca restaurantes y hoteles en la zona objetivo, recoge los datos reales de cada uno —nombre, dirección, teléfono, valoración, número de reseñas y web— y los vuelca en la hoja donde trabaja el comercial. Para cada local, la IA escribe un resumen de por qué es buen candidato y un email de primer contacto redactado para ese negocio concreto, no una plantilla con el nombre cambiado.</p>
+<p>Dos decisiones que definen el módulo:</p>
+<ul>
+  <li><strong>El mercado se cambia desde una celda:</strong> el comercial escribe «Valladolid, España» o «Lisboa, Portugal» en la hoja de configuración y el sistema prospecta ahí a partir de ese momento. Sin tocar la automatización.</li>
+  <li><strong>Nunca repite un local:</strong> antes de escribir nada, el sistema consulta la lista actual y descarta lo que ya está dentro. Puedes lanzarlo diez veces seguidas sin ensuciar la hoja.</li>
+  <li><strong>Las búsquedas rotan por segmento:</strong> cada semana ataca un tipo de local distinto en vez de repetir la misma consulta, de forma que la lista crece en amplitud en lugar de agotarse en la primera ejecución.</li>
+</ul>
+<p>El comercial revisa y aprueba antes de enviar. El sistema nunca envía un email de prospección por su cuenta.</p>
+
+<h3><span class="module-tag">Módulo 3 · </span>Reporting <span class="status-live">· en producción</span></h3>
+<p>Una hora después de la prospección, cada lunes a las 9:00, llega al correo del responsable comercial el informe de la semana: prospects nuevos, total acumulado, estado del pipeline —pendientes, enviados, respondidos, descartados—, desglose por mercado y tasa de respuesta. La IA redacta un resumen ejecutivo con esos números y termina con una acción recomendada.</p>
+<p>La condición que me impuse al construirlo: el informe llega sin abrir Make ni la hoja de cálculo, y el resumen solo puede usar los números reales. Si el dato no está en la hoja, no aparece en el informe.</p>
+
+<hr>
+
+<h2>Estado actual</h2>
+<p>Los tres módulos están construidos y funcionando. El ciclo se cierra solo: el lunes a las 8:00 entra la prospección, a las 9:00 sale el informe, y el generador de contenido está publicado y abierto a cualquiera. <em class="claim">Nada de esto es una maqueta: son automatizaciones en producción que se ejecutan aunque yo no esté delante.</em></p>
+
+<h2>Hacia dónde va</h2>
+<p>El sistema cubre hoy el ciclo completo para una bodega. Las siguientes decisiones de producto ya están tomadas:</p>
+<ul>
+  <li><strong>De una bodega a varias:</strong> Google Sheets es la elección correcta para el volumen actual y para el sitio donde el comercial ya trabaja. Escalar a varias bodegas a la vez es el momento de mover la capa de datos a una base real.</li>
+  <li><strong>Cerrar el bucle de respuesta:</strong> hoy el informe mide lo que sale. El siguiente paso es que también lea lo que vuelve —quién contesta y qué contesta— para que el sistema aprenda qué ángulo funciona en cada tipo de local.</li>
+  <li><strong>Señales de intención:</strong> la prospección encuentra locales que encajan. La versión siguiente prioriza además por momento: aperturas recientes, cambios de carta, actividad que indica que hay una decisión de compra abierta.</li>
+</ul>
+
+<p class="soft">Las decisiones de construcción detalladas están documentadas en el <code>DECISIONS.md</code> del <a href="https://github.com/pablorii/sales-carousel-generator" target="_blank" rel="noopener">repositorio</a>.</p>
+
+<div class="cta-final">
+  <h2>¿Quieres verlo por dentro?</h2>
+  <p>Puedo enseñarte el sistema completo y las decisiones que hay detrás.</p>
+  <a class="btn" href="index.html#contacto">Hablemos</a>
+</div>
+</main>
+
+<footer>Pablo Orihuela · Máster en IA aplicada a negocio · Valladolid, España</footer>
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    var t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+</script>
+</body>
+</html>

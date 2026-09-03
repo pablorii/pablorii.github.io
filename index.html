@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pablo Orihuela — Marketing, ventas e IA</title>
+<meta name="description" content="Construyo sistemas de IA que resuelven problemas comerciales reales. Marketing, ventas y operaciones conectados.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Instrument+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FDFDFB;
+  --ink:#1A1714;
+  --ink-soft:#5C564F;
+  --tinto:#6E1423;
+  --tinto-soft:#F3E8EA;
+  --line:#E4E0DA;
+  --max:1080px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1!important;transform:none!important;transition:none!important}}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Instrument Sans',system-ui,sans-serif;
+  font-size:17px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:2px solid var(--tinto);outline-offset:3px;border-radius:2px}
+
+/* ---------- nav ---------- */
+nav{
+  position:sticky;top:0;z-index:10;
+  background:color-mix(in srgb,var(--paper) 92%,transparent);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{
+  max-width:var(--max);margin:0 auto;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 24px;
+}
+.nav-name{font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:14px;text-decoration:none;color:var(--ink-soft)}
+.nav-links a:hover{color:var(--tinto)}
+
+/* ---------- pipeline spine (signature) ---------- */
+.spine-wrap{position:relative;max-width:var(--max);margin:0 auto;padding:0 24px}
+.spine{
+  position:absolute;left:24px;top:0;bottom:0;width:1px;
+  background:linear-gradient(to bottom,transparent 0,var(--line) 60px,var(--line) calc(100% - 60px),transparent 100%);
+}
+@media(min-width:900px){.spine{left:calc(24px + 8px)}}
+section{position:relative;padding:96px 0 96px 48px}
+@media(max-width:640px){section{padding:72px 0 72px 36px}}
+.node{
+  position:absolute;left:-4px;top:104px;
+  width:9px;height:9px;border-radius:50%;
+  background:var(--paper);border:2px solid var(--tinto);
+}
+@media(min-width:900px){.node{left:4px}}
+@media(max-width:640px){.node{top:80px}}
+.eyebrow{
+  font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--tinto);margin-bottom:20px;display:block;
+}
+
+/* ---------- hero ---------- */
+.hero{padding-top:110px;padding-bottom:110px}
+.hero h1{
+  font-family:'Fraunces',serif;font-weight:600;
+  font-size:clamp(38px,6vw,64px);line-height:1.08;
+  letter-spacing:-.01em;max-width:16ch;
+}
+.hero h1 em{font-style:italic;color:var(--tinto)}
+.hero p{margin-top:28px;max-width:52ch;font-size:19px;color:var(--ink-soft)}
+.hero-flow{
+  margin-top:30px;font-family:'Space Mono',monospace;font-size:13px;
+  color:var(--ink-soft);letter-spacing:.04em;
+}
+.hero-flow b{color:var(--ink);font-weight:700}
+.hero-flow .arrow{color:var(--tinto);padding:0 6px}
+.cta-row{margin-top:40px;display:flex;gap:14px;flex-wrap:wrap}
+.btn{
+  display:inline-block;padding:13px 26px;border-radius:3px;
+  font-size:15px;font-weight:600;text-decoration:none;
+  transition:transform .15s ease,background .15s ease;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--tinto);color:#fff}
+.btn-primary:hover{background:#571020}
+.btn-ghost{border:1px solid var(--ink);color:var(--ink)}
+.btn-ghost:hover{background:var(--ink);color:var(--paper)}
+
+/* ---------- work ---------- */
+.case-card{
+  border:1px solid var(--line);border-radius:6px;
+  padding:44px;margin-top:8px;background:#fff;
+  transition:border-color .2s ease;
+}
+.case-card:hover{border-color:var(--tinto)}
+.case-label{
+  font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-soft);
+}
+.case-card h3{
+  font-family:'Fraunces',serif;font-weight:600;
+  font-size:clamp(26px,3.4vw,36px);margin:14px 0 16px;
+}
+.case-card>p{max-width:58ch;color:var(--ink-soft)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 8px}
+.chip{
+  font-family:'Space Mono',monospace;font-size:12px;
+  background:var(--tinto-soft);color:var(--tinto);
+  padding:5px 12px;border-radius:100px;
+}
+.case-status{
+  display:flex;align-items:center;gap:8px;
+  margin-top:18px;font-size:14px;color:var(--ink-soft);
+}
+.dot{width:8px;height:8px;border-radius:50%;background:#2E7D46;flex:none}
+.case-ctas{margin-top:28px;display:flex;gap:14px;flex-wrap:wrap}
+.proof-row{margin-top:26px;border-top:1px solid var(--line);padding-top:22px;display:grid;gap:14px}
+@media(min-width:700px){.proof-row{grid-template-columns:repeat(3,1fr);gap:26px}}
+.proof-row div{font-size:14.5px;line-height:1.5;color:var(--ink-soft)}
+.proof-row b{display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--tinto);margin-bottom:5px}
+
+/* ---------- how ---------- */
+.how-grid{display:grid;gap:0;margin-top:8px}
+.how-item{padding:30px 0;border-top:1px solid var(--line)}
+.how-item:last-child{border-bottom:1px solid var(--line)}
+.how-item h3{
+  font-family:'Fraunces',serif;font-weight:600;font-size:22px;margin-bottom:10px;
+}
+.how-item p{max-width:62ch;color:var(--ink-soft)}
+
+/* ---------- about ---------- */
+.about p{max-width:60ch;margin-bottom:18px}
+.about .lead{font-size:19px}
+.about strong{color:var(--tinto)}
+
+/* ---------- contact ---------- */
+.contact h2{
+  font-family:'Fraunces',serif;font-weight:600;
+  font-size:clamp(30px,4.5vw,46px);margin-bottom:18px;
+}
+.contact p{max-width:52ch;color:var(--ink-soft)}
+.contact-links{margin-top:32px;display:flex;gap:26px;flex-wrap:wrap;list-style:none}
+.contact-links a{
+  font-family:'Space Mono',monospace;font-size:14px;letter-spacing:.04em;
+  text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:3px;
+}
+.contact-links a:hover{border-color:var(--tinto);color:var(--tinto)}
+
+h2.section-title{
+  font-family:'Fraunces',serif;font-weight:600;
+  font-size:clamp(28px,4vw,40px);margin-bottom:36px;
+}
+
+footer{
+  border-top:1px solid var(--line);
+  padding:28px 24px;text-align:center;
+  font-family:'Space Mono',monospace;font-size:12px;color:var(--ink-soft);
+}
+
+/* ---------- reveal ---------- */
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-name" href="#top">Pablo Orihuela</a>
+    <ul class="nav-links">
+      <li><a href="#trabajo">Trabajo</a></li>
+      <li><a href="#sobre-mi">Sobre mí</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="spine-wrap" id="top">
+  <div class="spine" aria-hidden="true"></div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="node" aria-hidden="true"></span>
+    <h1>Construyo sistemas de IA que <em>venden</em>.</h1>
+    <p>Marketing, ventas y operaciones conectados con inteligencia artificial. No hablo de IA: la uso para que un negocio venda más con menos fricción.</p>
+    <div class="hero-flow" aria-label="Flujo: atraer, contactar, medir">
+      <b>atraer</b><span class="arrow">→</span><b>contactar</b><span class="arrow">→</span><b>medir</b>
+    </div>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#trabajo">Ver mi trabajo</a>
+      <a class="btn btn-ghost" href="#contacto">Contacto</a>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="trabajo">
+    <span class="node" aria-hidden="true"></span>
+    <span class="eyebrow">Trabajo</span>
+    <h2 class="section-title">Casos</h2>
+
+    <article class="case-card reveal">
+      <span class="case-label">Sistema de ventas AI · Caso completo</span>
+      <h3>VineReach</h3>
+      <p>Un sistema de IA que ayuda a las bodegas de Castilla y León a llegar a restaurantes y hoteles sin depender de un Excel que nadie actualiza. Tres módulos —contenido, prospección y reporting— construidos y funcionando: cada lunes busca clientes potenciales, redacta el primer contacto y envía el informe de la semana. Solo.</p>
+      <div class="chips">
+        <span class="chip">Claude API</span>
+        <span class="chip">Groq</span>
+        <span class="chip">Make</span>
+        <span class="chip">Google Maps API</span>
+        <span class="chip">Google Sheets</span>
+        <span class="chip">IA aplicada a ventas</span>
+      </div>
+      <div class="case-status"><span class="dot" aria-hidden="true"></span>Las tres fases en producción, ejecutándose solas cada semana</div>
+      <div class="proof-row">
+        <div><b>Atraer</b>Genera el carrusel de LinkedIn. Pruébalo tú mismo, está abierto.</div>
+        <div><b>Contactar</b>Cada lunes a las 8:00 busca locales y escribe el email de cada uno.</div>
+        <div><b>Medir</b>A las 9:00 llega el informe de la semana al correo.</div>
+      </div>
+      <div class="case-ctas">
+        <a class="btn btn-primary" href="vinereach.html">Leer el caso completo</a>
+        <a class="btn btn-ghost" href="https://pablorii.github.io/sales-carousel-generator/" target="_blank" rel="noopener">Probar la demo</a>
+      </div>
+    </article>
+  </section>
+
+  <!-- HOW -->
+  <section id="como-trabajo">
+    <span class="node" aria-hidden="true"></span>
+    <span class="eyebrow">Método</span>
+    <h2 class="section-title">Cómo trabajo</h2>
+    <div class="how-grid">
+      <div class="how-item reveal">
+        <h3>Del problema al sistema</h3>
+        <p>No empiezo por la herramienta, empiezo por el proceso roto. VineReach no nació de «quiero usar IA», nació de un comercial perdiendo su semana en llamadas que no contestan.</p>
+      </div>
+      <div class="how-item reveal">
+        <h3>La IA hace el trabajo previo; la persona decide</h3>
+        <p>Los sistemas que construyo no sustituyen al comercial ni al marketer: le quitan de encima el trabajo que no requiere criterio para que se dedique al que sí.</p>
+      </div>
+      <div class="how-item reveal">
+        <h3>Publicar antes que perfeccionar</h3>
+        <p>Prefiero una fase funcionando en producción que tres fases perfectas en un documento. Empecé publicando el módulo más simple, y desde ahí construí los otros dos hasta cerrar el ciclo entero.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="sobre-mi" class="about">
+    <span class="node" aria-hidden="true"></span>
+    <span class="eyebrow">Sobre mí</span>
+    <h2 class="section-title">Pablo Orihuela</h2>
+    <p class="lead reveal">Soy de Valladolid. Vengo del mundo del marketing y las ventas, y un <strong>Máster en IA aplicada a negocio</strong> me dio la tercera pieza: la capacidad de construir los sistemas, no solo de idearlos.</p>
+    <p class="reveal">Me interesa el cruce exacto de las tres cosas — lo que ahora se llama perfil GTM: entender cómo se atrae a un cliente (marketing), cómo se cierra (ventas) y cómo se automatiza y mide todo el proceso (IA y operaciones).</p>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contacto" class="contact">
+    <span class="node" aria-hidden="true"></span>
+    <span class="eyebrow">Contacto</span>
+    <h2>Hablemos.</h2>
+    <p>Si buscas a alguien que conecte marketing, ventas e IA — o quieres ver VineReach por dentro — escríbeme.</p>
+    <ul class="contact-links">
+      <li><a href="mailto:orihuelalopez2@gmail.com">orihuelalopez2@gmail.com</a></li>
+      <li><a href="https://www.linkedin.com/in/pablo-orihuela-sdr/" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href="https://github.com/pablorii" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </section>
+</div>
+
+<footer>Pablo Orihuela · Valladolid, España</footer>
+
+<script>
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    var t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+</script>
+</body>
+</html>
